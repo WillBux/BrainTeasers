@@ -1,15 +1,20 @@
 import csv
 import numpy as np
-import random as r
+import queue
+import time
 
-buffer_size = 100 #unsure
+queue_size = 1000 #can be set later
 
-buffer = np.empty(buffer_size) #default type is float64
+q = queue.Queue(queue_size)
 c = 0
 
-with open('numbers.csv') as csvfile:
-	numreader = csv.reader(csvfile, delimiter = ' ')
+with open('stroop_fnirs.csv') as csvfile:
+	numreader = csv.reader(csvfile)
 	for row in numreader:
-		buffer[c] = row[0]
+		q.put(row)
 		c += 1
-		sleep(r.uniform(.1,.5)) #sleep for random amount of time between 0.1 and 0.5 seconds for 2-10 samples per second 
+		print(c)
+		if (c % 5 == 0):
+			time.sleep(1) #put 5 per second
+		#maybe a break statement here of some sort?
+	#print(q.get()) #function to pull off queue
