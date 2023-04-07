@@ -10,20 +10,22 @@ def pop_from_queue(q: queue.Queue, output, optodes=104) -> None:
     taps = signal.firwin(8*fs+1, cutoffs, fs=fs)
     filter_buffer = np.zeros((len,optodes)) 
     filtered = np.zeros((optodes,))
-    i_buff = 0
+    count = 0
+    length = output["length"]
     while True:
         i, data = q.get() 
         if data is None: # all data has been pushed, quit
             break 
 
-        filter_buffer[i_buff%len, :] = data
+        filter_buffer[count%len, :] = data
         filtered = (filter_buffer * taps[:,np.newaxis]).sum(axis=0)
-        i_buff += 1
         taps = np.roll(taps, 1)
 
-        output["x"].append(i/10)
-        output["y"].append(filtered[3])
-        output["y2"].append(data[3])
+        output["x"][count%length] = i
+        output["y"][count%length] = filtered[3]
+        output["y2"][count%length] = data[3]
+        output["current"] = count%length
+        count += 1
         # print(data)
 
 
