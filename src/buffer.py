@@ -25,8 +25,7 @@ def push_to_queue(file: str, q: queue.Queue, task_event: threading.Event, task_d
                 task_event.set()
 
             if (c % 5 == 0):
-                pass
-                # time.sleep(0.046) #put 10 per second
+                time.sleep(0.46) #put 10 per second
             c += 1
     q.put(None) # signal that data is done
 
