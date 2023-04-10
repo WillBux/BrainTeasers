@@ -55,7 +55,7 @@ def main(test: bool) -> None:
     pop_t.join()
 
 
-if __name__ == "__main":
+if __name__ == "__main__":
     parser = ArgumentParser(prog="BrainTeasers")
     parser.add_argument("-t", "--test", action="store_true")
     args = parser.parse_args()
