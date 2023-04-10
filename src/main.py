@@ -29,11 +29,12 @@ def main(test: bool) -> None:
 
 
     q = queue.Queue(queue_size)
+    optodes = 104 if test else 48
     if test:
         push_t = threading.Thread(target=push_to_queue, args=(data, q, task_event, task_dat))
     else:
         push_t = threading.Thread(target=lsl_push_to_queue, args=(q,))
-    pop_t = threading.Thread(target=pop_from_queue, args=(q,figdat, output_updated))
+    pop_t = threading.Thread(target=pop_from_queue, args=(q, figdat, output_updated), kwargs={'optodes': optodes})
 
     push_t.start()
     pop_t.start()
