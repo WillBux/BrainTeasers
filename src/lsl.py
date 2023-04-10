@@ -30,7 +30,7 @@ class Inlet:
         # same time domain as the local lsl_clock()
         # (see https://labstreaminglayer.readthedocs.io/projects/liblsl/ref/enums.html#_CPPv414proc_clocksync)
         # and dejitter timestamps
-        self.inlet = pylsl.StreamInlet(info, max_buflen=plot_duration,
+        self.inlet = pylsl.StreamInlet(info, max_buflen=5,
                                        processing_flags=pylsl.proc_clocksync | pylsl.proc_dejitter)
         # store the name and channel count
         self.name = info.name()
