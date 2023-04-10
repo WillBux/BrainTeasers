@@ -59,6 +59,7 @@ if __name__ == "__main":
     parser = ArgumentParser(prog="BrainTeasers")
     parser.add_argument("-t", "--test", action="store_true")
     args = parser.parse_args()
+    print(f"Starting, with {args.test}")
     main(args.test)
 
 
