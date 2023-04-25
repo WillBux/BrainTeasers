@@ -12,8 +12,8 @@ def push_to_queue(file: str, q: queue.Queue, task_event: threading.Event, task_d
     c = 0 # line offset
     hits = get_onsets("../stroop/meas/onsets_t.csv")
     miss = get_onsets("../stroop/meas/onsets_f.csv")
-    if (True): # don't run continuously
-    # while(True): # run continuously
+    # if (True): # don't run continuously
+    while(True): # run continuously
         with open(file, 'r') as csvfile:
             numreader = csv.reader(csvfile)
             for row in numreader:
