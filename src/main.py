@@ -9,7 +9,7 @@ import pickle
 
 from buffer import push_to_queue
 from process import pop_from_queue
-# from lsl import lsl_push_to_queue
+from lsl import lsl_push_to_queue
 
 
 def main(test: bool) -> None:
@@ -17,8 +17,8 @@ def main(test: bool) -> None:
     data = "../stroop/meas/fnirs_data.csv"
     plt.ion() # enable interactive figures
     fig = plt.figure()
-    length = 600 # 60 seconds
-    optodes = 52*2
+    length = 1500 # 60 seconds @ 25 Hz
+    optodes = 104 if test else 48
     figdat = {"x": np.zeros((length,)), 
               "y": np.zeros((length, optodes)),
               "y2": np.zeros((length,optodes)),
@@ -31,7 +31,6 @@ def main(test: bool) -> None:
 
 
     q = queue.Queue(queue_size)
-    optodes = 104 if test else 48
     if test:
         push_t = threading.Thread(target=push_to_queue, args=(data, q, task_event, task_dat))
     else:

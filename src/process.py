@@ -6,7 +6,7 @@ import csv
 
 def pop_from_queue(q: queue.Queue, output, output_updated: threading.Event, optodes=104, log=False) -> None:
     # create filter
-    fs = 10
+    fs = 25
     len = fs*8+1 # 8 seconds of data
     cutoffs = [0.12, 0.35, 0.7, 2.0, 3]
     cutoffs = [0.01, 0.2]
