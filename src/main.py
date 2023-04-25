@@ -48,8 +48,8 @@ def main(test: bool) -> None:
         x = np.roll(figdat["x"], rot)[1:-1]
         y = np.roll(figdat["y"], rot, axis=0)[1:-1,:]
         for i in range(optodes//2):
-            plt.plot(x, i/10000+y[:,2*i], color="b")
-            plt.plot(x, i/10000+y[:,2*i+1], color="r")
+            plt.plot(x, i+y[:,2*i], color="b")
+            plt.plot(x, i+y[:,2*i+1], color="r")
         if test:
             for task in task_dat:
                 if task[0] > x[0] and task[0] < x[-1]:
