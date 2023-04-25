@@ -9,7 +9,8 @@ def pop_from_queue(q: queue.Queue, output, output_updated: threading.Event, opto
     fs = 10
     len = fs*8+1 # 8 seconds of data
     cutoffs = [0.12, 0.35, 0.7, 2.0, 3]
-    taps = signal.firwin(8*fs+1, cutoffs, fs=fs)
+    cutoffs = [0.01, 0.2]
+    taps = signal.firwin(8*fs+1, cutoffs, fs=fs, pass_zero=False)
     filter_buffer = np.zeros((len,optodes)) 
     filtered = np.zeros((optodes,))
     count = 0

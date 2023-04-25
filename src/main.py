@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import queue
 import threading
 import numpy as np
@@ -7,7 +8,7 @@ from argparse import ArgumentParser
 
 from buffer import push_to_queue
 from process import pop_from_queue
-from lsl import lsl_push_to_queue
+# from lsl import lsl_push_to_queue
 
 
 def main(test: bool) -> None:
@@ -41,11 +42,14 @@ def main(test: bool) -> None:
 
     def draw_fig():
         rot = -figdat["current"]-1
-        plt.plot(np.roll(figdat["x"], rot), np.roll(figdat["y"], rot, axis=0)[:,2])
-        plt.plot(np.roll(figdat["x"], rot), np.roll(figdat["y2"], rot, axis=0)[:,2])
+        x = np.roll(figdat["x"], rot)[1:-1]
+        y = np.roll(figdat["y"], rot, axis=0)[1:-1,:]
+        for i in range(optodes//2):
+            plt.plot(x, i/10000+y[:,2*i], color="b")
+            plt.plot(x, i/10000+y[:,2*i+1], color="r")
         for task in task_dat:
             plt.axvline(x = task[0], color = 'b' if task[1] else 'r')
-        # plt.ylim(1,3)
+        plt.xlim(x[0], x[-1])
 
     while True:
         output_updated.wait()
@@ -60,7 +64,7 @@ if __name__ == "__main__":
     parser = ArgumentParser(prog="BrainTeasers")
     parser.add_argument("-t", "--test", action="store_true")
     args = parser.parse_args()
-    print(f"Starting, with {args.test}")
+    print("Testing Mode" if args.test else "Doin it live")
     main(args.test)
 
 
