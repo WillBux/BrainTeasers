@@ -39,8 +39,9 @@ def main(test: bool) -> None:
 
     push_t.start()
     pop_t.start()
-
-    model = pickle.load(open("glm_model.pkl", 'rb'))
+    
+    if test:
+        model = pickle.load(open("glm_model.pkl", 'rb'))
 
     def draw_fig():
         rot = -figdat["current"]-1
@@ -49,17 +50,18 @@ def main(test: bool) -> None:
         for i in range(optodes//2):
             plt.plot(x, i/10000+y[:,2*i], color="b")
             plt.plot(x, i/10000+y[:,2*i+1], color="r")
-        for task in task_dat:
-            if task[0] > x[0] and task[0] < x[-1]:
-                if task[0] + 9.2 < x[-1] and task[0] - 1 > x[0]:
-                    start = np.where(x == task[0]-1)[0][0]
-                    end = np.where(x == task[0]+9)[0][0]
-                    dat = y[start:end,:]
-                    dat = dat.flatten()
-                    pred = model.predict([dat])
-                    plt.axvline(x = task[0], color = 'b' if pred[0] else 'r')
-                else: 
-                    plt.axvline(x = task[0], color = 'k')
+        if test:
+            for task in task_dat:
+                if task[0] > x[0] and task[0] < x[-1]:
+                    if task[0] + 9.2 < x[-1] and task[0] - 1 > x[0]:
+                        start = np.where(x == task[0]-1)[0][0]
+                        end = np.where(x == task[0]+9)[0][0]
+                        dat = y[start:end,:]
+                        dat = dat.flatten()
+                        pred = model.predict([dat])
+                        plt.axvline(x = task[0], color = 'b' if pred[0] else 'r')
+                    else: 
+                        plt.axvline(x = task[0], color = 'k')
 
 
         plt.xlim(x[0], x[-1])
