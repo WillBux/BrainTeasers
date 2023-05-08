@@ -9,7 +9,7 @@ q = queue.Queue(queue_size)
 data = "../stroop/meas/fnirs_data.csv"
 
 def push_to_queue(file: str, q: queue.Queue, task_event: threading.Event, task_dat: list[tuple]) -> None:
-    c = 0 # line offset
+    c=0
     hits = get_onsets("../stroop/meas/onsets_t.csv")
     miss = get_onsets("../stroop/meas/onsets_f.csv")
     # if (True): # don't run continuously
